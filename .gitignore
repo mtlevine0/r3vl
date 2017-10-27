@@ -30,6 +30,7 @@ nbdist/
 
 ### H2 ###
 *.mv*
+*.db.*
 
 # Compiled class file
 *.class
