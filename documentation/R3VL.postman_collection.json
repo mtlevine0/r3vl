@@ -1,0 +1,139 @@
+{
+	"info": {
+		"name": "R3VL",
+		"_postman_id": "aaacd3a8-7f38-a752-8d5b-2b9991f69218",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Party",
+			"description": "",
+			"item": [
+				{
+					"name": "Party",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"partyName\": \"matt\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/party",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"party"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Party",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"videoId\": \"123\",\n\t\"title\": \"A\",\n\t\"artist\": \"B\",\n\t\"duration\": 123,\n\t\"party\": {\n\t\t\"id\": 1\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/party",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"party"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Song",
+			"description": "",
+			"item": [
+				{
+					"name": "Song",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"videoId\": \"123\",\n\t\"title\": \"A\",\n\t\"artist\": \"B\",\n\t\"duration\": 123,\n\t\"party\": {\n\t\t\"id\": 1\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/song",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"song"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Song By Party ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/song/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"song",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
