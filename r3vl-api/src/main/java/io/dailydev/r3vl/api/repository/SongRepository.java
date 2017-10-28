@@ -12,5 +12,5 @@ import io.dailydev.r3vl.api.model.Song;
 public interface SongRepository extends CrudRepository<Song, Long> {
 
 	List<Song> findAllByPartyId(Long partyId); 
-
+	
 }

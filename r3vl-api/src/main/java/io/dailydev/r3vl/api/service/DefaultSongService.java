@@ -16,12 +16,23 @@ public class DefaultSongService implements SongService {
 	SongRepository songRepository;
 	
 	@Override
+	public Song find(Long id) {
+		return songRepository.findOne(id);
+	}
+	
+	@Override
 	public List<Song> findAll() {
 		return (List<Song>) songRepository.findAll();
 	}
 
 	@Override
 	public Song create(Song song) {
+		// add the song to the queue
+		return songRepository.save(song);
+	}
+	
+	@Override
+	public Song update(Song song) {
 		return songRepository.save(song);
 	}
 
