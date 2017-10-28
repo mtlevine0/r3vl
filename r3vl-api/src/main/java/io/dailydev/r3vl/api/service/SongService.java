@@ -18,5 +18,7 @@ public interface SongService {
 	public void delete(Long id);
 
 	public List<Song> findAllByPartyId(Long partyId);
+	
+	public Song findByVideoId(String videoId);
 
 }

@@ -13,4 +13,6 @@ public interface SongRepository extends CrudRepository<Song, Long> {
 
 	List<Song> findAllByPartyId(Long partyId); 
 	
+	Song findByVideoId(String videoId);
+	
 }

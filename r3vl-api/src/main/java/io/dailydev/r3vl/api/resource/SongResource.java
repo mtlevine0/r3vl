@@ -36,12 +36,13 @@ public class SongResource {
 		return new ResponseEntity<Song>(songService.create(song), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "song/{songId}", method = RequestMethod.PUT)
-	public Song available(@PathVariable("songId") Long songId) {
-		Song song = songService.find(songId);
+	@RequestMapping(value = "song/{videoId}", method = RequestMethod.PUT)
+	public  ResponseEntity<Song> available(@PathVariable("videoId") String videoId) {
+		System.out.println("Song finished downloading!");
+		Song song = songService.findByVideoId(videoId);
 		song.setAvailable(true);
-		return songService.create(song);
-//		return new ResponseEntity<List<Song>>(songService.findAllByPartyId(partyId), HttpStatus.OK);
+		songService.update(song);
+		return new ResponseEntity<Song>(song, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "song/{id}", method = RequestMethod.DELETE)
