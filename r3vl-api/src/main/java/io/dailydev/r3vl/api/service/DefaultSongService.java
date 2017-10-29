@@ -1,11 +1,13 @@
 package io.dailydev.r3vl.api.service;
 
+import java.net.ConnectException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import io.dailydev.r3vl.api.adapter.RipperMQAdapter;
 import io.dailydev.r3vl.api.model.Song;
 import io.dailydev.r3vl.api.repository.SongRepository;
 
@@ -14,6 +16,9 @@ public class DefaultSongService implements SongService {
 
 	@Autowired
 	SongRepository songRepository;
+	
+	@Autowired
+	RipperMQAdapter ripperMQAdapter;
 	
 	@Override
 	public Song find(Long id) {
@@ -26,14 +31,17 @@ public class DefaultSongService implements SongService {
 	}
 
 	@Override
-	public Song create(Song song) {
-		// add the song to rippernode
-		final String uri = "http://172.17.0.1:8081/api/v1/song";
-		RestTemplate restTemplate = new RestTemplate();
-	    Song result = restTemplate.postForObject( uri, song, Song.class);
-	    System.out.println("DefaultSongService: " + result.getVideoId());
-	    
+	public Song create(Song song) throws ConnectException {
+	    ripperMQAdapter.addSong(song);
 		return songRepository.save(song);
+	}
+
+	@Override
+	public Song status(String videoId) {
+		Song song = this.findByVideoId(videoId);
+		song.setAvailable(true);
+		this.update(song);
+		return song;
 	}
 	
 	@Override

@@ -1,5 +1,6 @@
 package io.dailydev.r3vl.api.resource;
 
+import java.net.ConnectException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,16 +34,19 @@ public class SongResource {
 	
 	@RequestMapping(value = "song", method = RequestMethod.POST)
 	public ResponseEntity<Song> create(@RequestBody Song song) {
-		return new ResponseEntity<Song>(songService.create(song), HttpStatus.OK);
+		HttpStatus status = HttpStatus.OK;
+		try {
+			song = songService.create(song);
+		} catch (ConnectException ce) {
+			System.out.println("Connection to RipperMQ failed!");
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Song>(song, status);
 	}
 	
 	@RequestMapping(value = "song/{videoId}", method = RequestMethod.PUT)
 	public  ResponseEntity<Song> available(@PathVariable("videoId") String videoId) {
-		System.out.println("Song finished downloading!");
-		Song song = songService.findByVideoId(videoId);
-		song.setAvailable(true);
-		songService.update(song);
-		return new ResponseEntity<Song>(song, HttpStatus.OK);
+		return new ResponseEntity<Song>(songService.status(videoId), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "song/{id}", method = RequestMethod.DELETE)

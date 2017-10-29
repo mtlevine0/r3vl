@@ -12,6 +12,7 @@ RUN mvn clean package -DskipTests
 WORKDIR /usr/src/r3vl-workspace/r3vl-api/target
 
 EXPOSE 8082
+ENV SPRING_PROFILES_ACTIVE=dev
 
 CMD java -jar r3vl-api-0.0.1-SNAPSHOT.jar
 

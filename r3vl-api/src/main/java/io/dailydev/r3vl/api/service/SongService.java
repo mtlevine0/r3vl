@@ -1,5 +1,6 @@
 package io.dailydev.r3vl.api.service;
 
+import java.net.ConnectException;
 import java.util.List;
 import java.util.Set;
 
@@ -11,7 +12,7 @@ public interface SongService {
 	
 	public List<Song> findAll();
 	
-	public Song create(Song song);
+	public Song create(Song song) throws ConnectException;
 	
 	public Song update(Song song);
 	
@@ -20,5 +21,7 @@ public interface SongService {
 	public List<Song> findAllByPartyId(Long partyId);
 	
 	public Song findByVideoId(String videoId);
+
+	Song status(String videoId);
 
 }
