@@ -25,7 +25,8 @@ public class Song {
 	private String title;
 	private String artist;
 	private int duration;
-	private boolean available;
+	private SongStatus status;
+	private String host;
 	
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -34,15 +35,17 @@ public class Song {
 	
 	public Song() { }
 
-	public Song(Long id, String videoId, String title, String artist, int duration, Party party, Boolean available) {
+	public Song(Long id, String videoId, String title, String artist, int duration, SongStatus status, String host,
+			Party party) {
 		super();
 		this.id = id;
 		this.videoId = videoId;
 		this.title = title;
 		this.artist = artist;
 		this.duration = duration;
+		this.status = status;
+		this.host = host;
 		this.party = party;
-		this.available = available;
 	}
 
 	public Long getId() {
@@ -93,12 +96,20 @@ public class Song {
 		this.party = party;
 	}
 
-	public boolean isAvailable() {
-		return available;
+	public SongStatus getStatus() {
+		return status;
 	}
 
-	public void setAvailable(boolean available) {
-		this.available = available;
+	public void setStatus(SongStatus status) {
+		this.status = status;
+	}
+
+	public String getHost() {
+		return host;
+	}
+
+	public void setHost(String host) {
+		this.host = host;
 	}
 
 }

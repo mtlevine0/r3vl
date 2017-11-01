@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 import io.dailydev.r3vl.api.adapter.RipperMQAdapter;
 import io.dailydev.r3vl.api.model.Song;
+import io.dailydev.r3vl.api.model.SongStatus;
 import io.dailydev.r3vl.api.repository.SongRepository;
 
 @Component
@@ -31,15 +31,20 @@ public class DefaultSongService implements SongService {
 	}
 
 	@Override
-	public Song create(Song song) throws ConnectException {
-	    ripperMQAdapter.addSong(song);
+	public Song create(Song song) {
+		try {
+			ripperMQAdapter.addSong(song);
+			song.setStatus(SongStatus.QUEUED);
+		} catch(ConnectException ce) {
+			song.setStatus(SongStatus.FAILED);
+		}
 		return songRepository.save(song);
 	}
 
 	@Override
 	public Song status(String videoId) {
 		Song song = this.findByVideoId(videoId);
-		song.setAvailable(true);
+		song.setStatus(SongStatus.AVAILABLE);
 		this.update(song);
 		return song;
 	}

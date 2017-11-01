@@ -12,7 +12,7 @@ public interface SongService {
 	
 	public List<Song> findAll();
 	
-	public Song create(Song song) throws ConnectException;
+	public Song create(Song song);
 	
 	public Song update(Song song);
 	

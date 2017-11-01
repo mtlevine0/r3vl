@@ -35,12 +35,7 @@ public class SongResource {
 	@RequestMapping(value = "song", method = RequestMethod.POST)
 	public ResponseEntity<Song> create(@RequestBody Song song) {
 		HttpStatus status = HttpStatus.OK;
-		try {
-			song = songService.create(song);
-		} catch (ConnectException ce) {
-			System.out.println("Connection to RipperMQ failed!");
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-		}
+		song = songService.create(song);
 		return new ResponseEntity<Song>(song, status);
 	}
 	
