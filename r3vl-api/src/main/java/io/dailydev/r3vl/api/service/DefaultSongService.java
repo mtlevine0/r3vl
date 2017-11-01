@@ -1,6 +1,5 @@
 package io.dailydev.r3vl.api.service;
 
-import java.net.ConnectException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,7 @@ public class DefaultSongService implements SongService {
 		try {
 			ripperMQAdapter.addSong(song);
 			song.setStatus(SongStatus.QUEUED);
-		} catch(ConnectException ce) {
+		} catch(Exception e) {
 			song.setStatus(SongStatus.FAILED);
 		}
 		return songRepository.save(song);
