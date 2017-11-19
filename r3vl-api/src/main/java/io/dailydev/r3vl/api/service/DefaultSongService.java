@@ -68,4 +68,12 @@ public class DefaultSongService implements SongService {
 		return songRepository.findByVideoId(videoId);
 	}
 
+	@Override
+	public Song getNextSong(Long partyId) {
+		Song song = songRepository.findByOrderByIdAsc().get(0);
+		song.setStatus(SongStatus.PLAYED);
+		this.update(song);
+		return song;
+	}
+
 }

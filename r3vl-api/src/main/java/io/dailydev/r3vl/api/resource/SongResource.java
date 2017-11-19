@@ -22,6 +22,11 @@ public class SongResource {
 	@Autowired
 	SongService songService;
 	
+	@RequestMapping(value = "song/{partyId}/next", method = RequestMethod.GET)
+	public ResponseEntity<Song> findNextSongByParty(@PathVariable("partyId") Long partyId) {
+		return new ResponseEntity<Song>(songService.getNextSong(partyId), HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "song/{partyId}", method = RequestMethod.GET)
 	public ResponseEntity<List<Song>> findAllByParty(@PathVariable("partyId") Long partyId) {
 		return new ResponseEntity<List<Song>>(songService.findAllByPartyId(partyId), HttpStatus.OK);

@@ -23,5 +23,7 @@ public interface SongService {
 	public Song findByVideoId(String videoId);
 
 	Song status(String videoId);
+	
+	Song getNextSong(Long partyId);
 
 }
