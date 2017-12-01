@@ -19,6 +19,6 @@ public interface SongRepository extends CrudRepository<Song, Long> {
 	Song findByVideoId(String videoId);
 	
 	@Query("select s from Song s where status=io.dailydev.r3vl.api.model.SongStatus.AVAILABLE order by id")
-	List<Song> findByOrderByIdAsc();
+	List<Song> findWhereStatusIsAvailableOrderByIdAsc();
 	
 }

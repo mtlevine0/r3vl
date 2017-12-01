@@ -25,12 +25,12 @@ public class DefaultSongService implements SongService {
 	}
 	
 	@Override
-	public List<Song> findAll() {
+	public List<Song> findAllSongs() {
 		return (List<Song>) songRepository.findAll();
 	}
 
 	@Override
-	public Song create(Song song) {
+	public Song createSong(Song song) {
 		try {
 			ripperMQAdapter.addSong(song);
 			song.setStatus(SongStatus.QUEUED);
@@ -41,25 +41,25 @@ public class DefaultSongService implements SongService {
 	}
 
 	@Override
-	public Song status(String videoId) {
+	public Song markSongAvailable(String videoId) {
 		Song song = this.findByVideoId(videoId);
 		song.setStatus(SongStatus.AVAILABLE);
-		this.update(song);
+		this.updateSong(song);
 		return song;
 	}
 	
 	@Override
-	public Song update(Song song) {
+	public Song updateSong(Song song) {
 		return songRepository.save(song);
 	}
 
 	@Override
-	public void delete(Long id) {
+	public void deleteSong(Long id) {
 		songRepository.delete(id);
 	}
 
 	@Override
-	public List<Song> findAllByPartyId(Long partyId) {
+	public List<Song> findAllSongsByPartyId(Long partyId) {
 		return songRepository.findAllByPartyId(partyId);
 	}
 
@@ -70,9 +70,9 @@ public class DefaultSongService implements SongService {
 
 	@Override
 	public Song getNextSong(Long partyId) {
-		Song song = songRepository.findByOrderByIdAsc().get(0);
+		Song song = songRepository.findWhereStatusIsAvailableOrderByIdAsc().get(0);
 		song.setStatus(SongStatus.PLAYED);
-		this.update(song);
+		this.updateSong(song);
 		return song;
 	}
 

@@ -1,6 +1,5 @@
 package io.dailydev.r3vl.api.resource;
 
-import java.net.ConnectException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,31 +27,31 @@ public class SongResource {
 	}
 	
 	@RequestMapping(value = "song/{partyId}", method = RequestMethod.GET)
-	public ResponseEntity<List<Song>> findAllByParty(@PathVariable("partyId") Long partyId) {
-		return new ResponseEntity<List<Song>>(songService.findAllByPartyId(partyId), HttpStatus.OK);
+	public ResponseEntity<List<Song>> findSongsAllByParty(@PathVariable("partyId") Long partyId) {
+		return new ResponseEntity<List<Song>>(songService.findAllSongsByPartyId(partyId), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "song", method = RequestMethod.GET)
-	public ResponseEntity<List<Song>> findAll() {
-		return new ResponseEntity<List<Song>>(songService.findAll(), HttpStatus.OK);
+	public ResponseEntity<List<Song>> findAllSongs() {
+		return new ResponseEntity<List<Song>>(songService.findAllSongs(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "song", method = RequestMethod.POST)
-	public ResponseEntity<Song> create(@RequestBody Song song) {
+	public ResponseEntity<Song> createSong(@RequestBody Song song) {
 		HttpStatus status = HttpStatus.OK;
-		song = songService.create(song);
+		song = songService.createSong(song);
 		return new ResponseEntity<Song>(song, status);
 	}
 	
 	@RequestMapping(value = "song/{videoId}", method = RequestMethod.PUT)
-	public  ResponseEntity<Song> available(@PathVariable("videoId") String videoId) {
-		return new ResponseEntity<Song>(songService.status(videoId), HttpStatus.OK);
+	public  ResponseEntity<Song> markSongAvailable(@PathVariable("videoId") String videoId) {
+		return new ResponseEntity<Song>(songService.markSongAvailable(videoId), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "song/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity delete(@PathVariable("id") Long id) {
-		songService.delete(id);
-		return new ResponseEntity(HttpStatus.OK);
+	public ResponseEntity<HttpStatus> deleteSong(@PathVariable("id") Long id) {
+		songService.deleteSong(id);
+		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 
 }

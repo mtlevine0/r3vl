@@ -10,19 +10,19 @@ public interface SongService {
 	
 	public Song find(Long id);
 	
-	public List<Song> findAll();
+	public List<Song> findAllSongs();
 	
-	public Song create(Song song);
+	public Song createSong(Song song);
 	
-	public Song update(Song song);
+	public Song updateSong(Song song);
 	
-	public void delete(Long id);
+	public void deleteSong(Long id);
 
-	public List<Song> findAllByPartyId(Long partyId);
+	public List<Song> findAllSongsByPartyId(Long partyId);
 	
 	public Song findByVideoId(String videoId);
 
-	Song status(String videoId);
+	Song markSongAvailable(String videoId);
 	
 	Song getNextSong(Long partyId);
 
