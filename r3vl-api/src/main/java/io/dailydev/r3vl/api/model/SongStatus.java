@@ -4,6 +4,7 @@ public enum SongStatus {
 	
 	QUEUED,
 	AVAILABLE,
+	ADDED,
 	PLAYED,
 	REMOVED,
 	FAILED

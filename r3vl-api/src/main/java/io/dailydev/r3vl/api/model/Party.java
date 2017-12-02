@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.Cascade;
-
 @Entity
 public class Party {
 	
@@ -24,13 +22,6 @@ public class Party {
 	private Set<Play> playList = new HashSet<Play>();
 	
 	public Party() { }
-
-	public Party(Long id, String partyName, Set<Play> playList) {
-		super();
-		this.id = id;
-		this.partyName = partyName;
-		this.playList = playList;
-	}
 
 	public Long getId() {
 		return id;

@@ -1,5 +1,6 @@
 package io.dailydev.r3vl.api.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -21,22 +23,19 @@ public class Play {
 	@Column(nullable = false)
 	private Long id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	private SongStatus status;
+	
+//	@JsonIgnore
+	@ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name = "song_id")
 	private Song song;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "party_id")
 	private Party party;
 	
 	public Play () { }
-
-	public Play(Long id, Song song, Party party) {
-		super();
-		this.id = id;
-		this.song = song;
-		this.party = party;
-	}
 
 	public Long getId() {
 		return id;
@@ -44,6 +43,14 @@ public class Play {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public SongStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(SongStatus status) {
+		this.status = status;
 	}
 
 	public Song getSong() {

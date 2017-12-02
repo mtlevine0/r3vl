@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import io.dailydev.r3vl.api.model.Party;
 import io.dailydev.r3vl.api.model.Play;
 import io.dailydev.r3vl.api.repository.PlayRepository;
 
@@ -16,7 +17,7 @@ public class DefaultPlayService implements PlayService {
 
 	@Override
 	public List<Play> findAllPlaysByPartyId(Long partyId) {
-		return playRepository.findAllByPartyId(partyId);
+		return playRepository.findAllPlaysByPartyId(partyId);
 	}
 
 	@Override
@@ -33,6 +34,16 @@ public class DefaultPlayService implements PlayService {
 	@Override
 	public Play findPlay(Long id) {
 		return playRepository.findOne(id);
+	}
+
+	@Override
+	public Play updatePlay(Play play) {
+		return playRepository.save(play);
+	}
+	
+	@Override
+	public List<Play> findAllPlaysByPartyIdWhereStatusIdAddedOrderById(Party party) {
+		return playRepository.findAllPlaysByPartyAndStatusIsAddedOrderById(party);
 	}
 
 }

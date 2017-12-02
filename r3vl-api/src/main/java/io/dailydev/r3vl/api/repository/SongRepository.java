@@ -1,7 +1,6 @@
 package io.dailydev.r3vl.api.repository;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.transaction.Transactional;
 

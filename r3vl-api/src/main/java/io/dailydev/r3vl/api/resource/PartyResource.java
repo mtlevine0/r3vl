@@ -1,8 +1,8 @@
 package io.dailydev.r3vl.api.resource;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.dailydev.r3vl.api.model.Party;
 import io.dailydev.r3vl.api.model.Play;
 import io.dailydev.r3vl.api.model.Song;
+import io.dailydev.r3vl.api.model.SongStatus;
 import io.dailydev.r3vl.api.service.PartyService;
 import io.dailydev.r3vl.api.service.PlayService;
 import io.dailydev.r3vl.api.service.SongService;
@@ -49,39 +50,69 @@ public class PartyResource {
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "party/{partyId}/song/next", method = RequestMethod.GET)
+	public ResponseEntity<Play> findNextSongByParty(@PathVariable("partyId") Long partyId) {
+		
+		// TODO: PartyService findNextSongByParty method!
+		
+		ArrayList<Play> playList = (ArrayList<Play>) playService.findAllPlaysByPartyIdWhereStatusIdAddedOrderById(partyService.find(partyId));
+		
+		Play play = playList.get(0);
+		play.setStatus(SongStatus.PLAYED);
+		playService.updatePlay(play);
+		
+		return new ResponseEntity<Play>(playList.get(0), HttpStatus.OK);
+	}
+	
+	// findAllPlaysByParty
+	@RequestMapping(value = "party/{partyId}/play", method = RequestMethod.GET)
+	public ResponseEntity<Collection<Play>> findAllPlaysByParty(@PathVariable("partyId") Long partyId) {
+		
+		// TODO: PartyService findAllPlaysByParty method!
+		
+		List<Play> playList = playService.findAllPlaysByPartyId(partyId);
+
+		return new ResponseEntity<Collection<Play>>(playList, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "party/{partyId}/song", method = RequestMethod.GET)
-	public ResponseEntity<Set<Song>> findAllSongsInParty(@PathVariable("partyId") Long partyId) {
+	public ResponseEntity<Collection<Song>> findAllSongsByParty(@PathVariable("partyId") Long partyId) {
 		
-		Set<Song> songList = songService.findAllSongsByParty(partyId);
+		// TODO: PartyService findAllSongsByParty method!
 		
-		return new ResponseEntity<Set<Song>>(songList, HttpStatus.OK);
+		List<Play> playList = playService.findAllPlaysByPartyId(partyId);
+		Collection<Song> songList = new ArrayList<Song>();
+		
+		for(Play play: playList) {
+			System.out.println(play.getSong().getVideoId());
+			songList.add(play.getSong());
+		}
+		
+		return new ResponseEntity<Collection<Song>>(songList, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "party/{partyId}/song", method = RequestMethod.POST)
 	public ResponseEntity<HttpStatus> addSongToParty(@PathVariable("partyId") Long partyId, @RequestBody Song song) {
 		
-		Song newSong = songService.findByVideoId(song.getVideoId());
+		// TODO: PartyService addSongToParty method!
 		
-		if(newSong == null) {
+		Song existingSong = songService.findByVideoId(song.getVideoId());
+		Party party = partyService.find(partyId);
+		
+		Play play = new Play();
+		play.setParty(party);
+		play.setStatus(SongStatus.ADDED);
+		
+		if(existingSong == null) {
 			// create the song
-			Play play = new Play();
-			play.setParty(partyService.find(partyId));
-			Set<Play> playList = new HashSet<Play>();
-			playList.add(play);
 			play.setSong(song);
-			song.setPlayList(playList);
-			songService.createSong(song);	
+			songService.createSong(song);
 		} else {
-			// create a new play association
-			Play play = new Play();
-			play.setParty(partyService.find(partyId));
-			Set<Play> playList = new HashSet<Play>();
-			playList.add(play);
-			play.setSong(newSong);
-			song.setPlayList(playList);
+			// update the song
+			play.setSong(existingSong);
 		}
 		
-
+		playService.createPlay(play);
 		
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
