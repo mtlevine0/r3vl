@@ -1,6 +1,5 @@
 package io.dailydev.r3vl.api.service;
 
-import java.net.ConnectException;
 import java.util.List;
 import java.util.Set;
 
@@ -14,16 +13,14 @@ public interface SongService {
 	
 	public Song createSong(Song song);
 	
+	public Song markSongAvailable(String videoId);
+	
 	public Song updateSong(Song song);
 	
 	public void deleteSong(Long id);
-
-	public List<Song> findAllSongsByPartyId(Long partyId);
 	
 	public Song findByVideoId(String videoId);
-
-	Song markSongAvailable(String videoId);
 	
-	Song getNextSong(Long partyId);
+	public Set<Song> findAllSongsByParty(Long partyId);
 
 }

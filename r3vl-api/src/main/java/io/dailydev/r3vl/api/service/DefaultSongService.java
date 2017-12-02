@@ -1,6 +1,7 @@
 package io.dailydev.r3vl.api.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -59,21 +60,14 @@ public class DefaultSongService implements SongService {
 	}
 
 	@Override
-	public List<Song> findAllSongsByPartyId(Long partyId) {
-		return songRepository.findAllByPartyId(partyId);
-	}
-
-	@Override
 	public Song findByVideoId(String videoId) {
 		return songRepository.findByVideoId(videoId);
 	}
-
+	
 	@Override
-	public Song getNextSong(Long partyId) {
-		Song song = songRepository.findWhereStatusIsAvailableOrderByIdAsc().get(0);
-		song.setStatus(SongStatus.PLAYED);
-		this.updateSong(song);
-		return song;
+	public Set<Song> findAllSongsByParty(Long partyId) {
+		return null;
 	}
+
 
 }

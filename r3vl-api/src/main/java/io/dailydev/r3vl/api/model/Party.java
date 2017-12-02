@@ -1,19 +1,16 @@
 package io.dailydev.r3vl.api.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.Cascade;
 
 @Entity
 public class Party {
@@ -23,21 +20,16 @@ public class Party {
 	private Long id;
 	private String partyName;
 	
-	@JsonBackReference
-	@OneToMany(
-		mappedBy="party", 
-		cascade = CascadeType.ALL, 
-		orphanRemoval = true
-	)
-	private List<Song> songQueue = new ArrayList<Song>();
+	@OneToMany(mappedBy = "party", cascade = CascadeType.ALL)
+	private Set<Play> playList = new HashSet<Play>();
 	
 	public Party() { }
 
-	public Party(Long id, String partyName, List<Song> songQueue) {
+	public Party(Long id, String partyName, Set<Play> playList) {
 		super();
 		this.id = id;
 		this.partyName = partyName;
-		this.songQueue = songQueue;
+		this.playList = playList;
 	}
 
 	public Long getId() {
@@ -56,12 +48,12 @@ public class Party {
 		this.partyName = partyName;
 	}
 
-	public List<Song> getSongQueue() {
-		return songQueue;
+	public Set<Play> getPlayList() {
+		return playList;
 	}
 
-	public void setSongQueue(List<Song> songQueue) {
-		this.songQueue = songQueue;
+	public void setPlayList(Set<Play> playList) {
+		this.playList = playList;
 	}
 
 }

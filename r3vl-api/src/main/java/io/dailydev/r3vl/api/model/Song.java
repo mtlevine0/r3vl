@@ -1,15 +1,16 @@
 package io.dailydev.r3vl.api.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -28,15 +29,13 @@ public class Song {
 	private SongStatus status;
 	private String host;
 	
-	@JsonBackReference
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "party_id")
-	private Party party;
+	@OneToMany(mappedBy = "song", cascade = CascadeType.ALL)
+	private Set<Play> playList = new HashSet<Play>();
 	
 	public Song() { }
 
 	public Song(Long id, String videoId, String title, String artist, int duration, SongStatus status, String host,
-			Party party) {
+			Set<Play> playList) {
 		super();
 		this.id = id;
 		this.videoId = videoId;
@@ -45,7 +44,7 @@ public class Song {
 		this.duration = duration;
 		this.status = status;
 		this.host = host;
-		this.party = party;
+		this.playList = playList;
 	}
 
 	public Long getId() {
@@ -88,14 +87,6 @@ public class Song {
 		this.duration = duration;
 	}
 
-	public Party getParty() {
-		return party;
-	}
-
-	public void setParty(Party party) {
-		this.party = party;
-	}
-
 	public SongStatus getStatus() {
 		return status;
 	}
@@ -110,6 +101,14 @@ public class Song {
 
 	public void setHost(String host) {
 		this.host = host;
+	}
+
+	public Set<Play> getPlayList() {
+		return playList;
+	}
+
+	public void setPlayList(Set<Play> playList) {
+		this.playList = playList;
 	}
 
 }

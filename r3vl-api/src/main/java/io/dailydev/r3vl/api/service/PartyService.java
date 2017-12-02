@@ -7,14 +7,17 @@ import java.util.Set;
 import org.springframework.stereotype.Component;
 
 import io.dailydev.r3vl.api.model.Party;
+import io.dailydev.r3vl.api.model.Song;
 
 @Component
 public interface PartyService {
 	
-	public List<Party> findAll();
+	public List<Party> findAllParties();
 	
-	public Party create(Party party);
+	public Party createParty(Party party);
 	
-	public void delete(Long id);
+	public void deleteParty(Long id);
+
+	public Party find(Long id);
 	
 }
