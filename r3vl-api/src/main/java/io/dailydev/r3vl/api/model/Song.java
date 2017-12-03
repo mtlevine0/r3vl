@@ -1,10 +1,17 @@
 package io.dailydev.r3vl.api.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -24,9 +31,11 @@ public class Song {
 	private SongStatus status;
 	private String host;
 	
-//	@OneToMany(mappedBy="song", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-//	@Column(nullable = true)
-//	private Set<Play> playList;
+	@CreationTimestamp
+	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "create_date")
+	private Date createDate;
 	
 	public Song() { }
 
@@ -86,12 +95,12 @@ public class Song {
 		this.host = host;
 	}
 
-//	public Set<Play> getPlayList() {
-//		return playList;
-//	}
-//
-//	public void setPlayList(Set<Play> playList) {
-//		this.playList = playList;
-//	}
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 
 }

@@ -1,6 +1,5 @@
 package io.dailydev.r3vl.api.resource;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import io.dailydev.r3vl.api.model.Party;
 import io.dailydev.r3vl.api.model.Play;
 import io.dailydev.r3vl.api.model.Song;
-import io.dailydev.r3vl.api.model.SongStatus;
 import io.dailydev.r3vl.api.service.PartyService;
 import io.dailydev.r3vl.api.service.PlayService;
 import io.dailydev.r3vl.api.service.SongService;

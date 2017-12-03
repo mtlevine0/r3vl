@@ -1,5 +1,7 @@
 package io.dailydev.r3vl.api.model;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -25,7 +32,6 @@ public class Play {
 	
 	private SongStatus status;
 	
-//	@JsonIgnore
 	@ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name = "song_id")
 	private Song song;
@@ -34,6 +40,12 @@ public class Play {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "party_id")
 	private Party party;
+	
+	@CreationTimestamp
+	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "create_date")
+	private Date createDate;
 	
 	public Play () { }
 
@@ -67,6 +79,14 @@ public class Play {
 
 	public void setParty(Party party) {
 		this.party = party;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 	
 }
