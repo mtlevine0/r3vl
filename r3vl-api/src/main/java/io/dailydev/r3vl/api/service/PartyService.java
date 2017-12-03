@@ -16,6 +16,8 @@ public interface PartyService {
 	public Party createParty(Party party);
 	
 	public void deleteParty(Long id);
+	
+	public Party checkPartyAvailability(Party party);
 
 	public Party find(Long id);
 	

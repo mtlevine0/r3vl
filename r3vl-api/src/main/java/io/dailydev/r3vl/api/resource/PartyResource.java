@@ -48,6 +48,23 @@ public class PartyResource {
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "party/available", method = RequestMethod.POST)
+	public ResponseEntity<Party> checkPartyAvailability(@RequestBody Party party) {
+		
+		Party existingParty = partyService.checkPartyAvailability(party);
+		HttpStatus status;
+		
+		if(existingParty == null) {
+			// its available
+			status = HttpStatus.OK;
+		} else {
+			// its not available
+			status = HttpStatus.FOUND;
+		}
+		
+		return new ResponseEntity<Party>(existingParty, status);
+	}
+	
 	@RequestMapping(value = "party/{partyId}/song/next", method = RequestMethod.GET)
 	public ResponseEntity<Play> findNextSongByParty(@PathVariable("partyId") Long partyId) {
 		

@@ -43,6 +43,11 @@ public class DefaultPartyService implements PartyService {
 	public void deleteParty(Long id) {
 		partyRepository.delete(id);
 	}
+	
+	@Override
+	public Party checkPartyAvailability(Party party) {
+		return partyRepository.findBypartyName(party.getPartyName());
+	}
 
 	@Override
 	public void addSongToParty(Song song, Long partyId) {
