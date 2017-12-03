@@ -53,66 +53,19 @@ public class PartyResource {
 	@RequestMapping(value = "party/{partyId}/song/next", method = RequestMethod.GET)
 	public ResponseEntity<Play> findNextSongByParty(@PathVariable("partyId") Long partyId) {
 		
-		// TODO: PartyService findNextSongByParty method!
-		
-		ArrayList<Play> playList = (ArrayList<Play>) playService.findAllPlaysByPartyIdWhereStatusIdAddedOrderById(partyService.find(partyId));
-		
-		Play play = playList.get(0);
-		play.setStatus(SongStatus.PLAYED);
-		playService.updatePlay(play);
-		
-		return new ResponseEntity<Play>(playList.get(0), HttpStatus.OK);
+		return new ResponseEntity<Play>(partyService.findNextSongByParty(partyId), HttpStatus.OK);
 	}
 	
-	// findAllPlaysByParty
 	@RequestMapping(value = "party/{partyId}/play", method = RequestMethod.GET)
 	public ResponseEntity<Collection<Play>> findAllPlaysByParty(@PathVariable("partyId") Long partyId) {
-		
-		// TODO: PartyService findAllPlaysByParty method!
-		
-		List<Play> playList = playService.findAllPlaysByPartyId(partyId);
-
-		return new ResponseEntity<Collection<Play>>(playList, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "party/{partyId}/song", method = RequestMethod.GET)
-	public ResponseEntity<Collection<Song>> findAllSongsByParty(@PathVariable("partyId") Long partyId) {
-		
-		// TODO: PartyService findAllSongsByParty method!
-		
-		List<Play> playList = playService.findAllPlaysByPartyId(partyId);
-		Collection<Song> songList = new ArrayList<Song>();
-		
-		for(Play play: playList) {
-			System.out.println(play.getSong().getVideoId());
-			songList.add(play.getSong());
-		}
-		
-		return new ResponseEntity<Collection<Song>>(songList, HttpStatus.OK);
+				
+		return new ResponseEntity<Collection<Play>>(partyService.findAllPlaysByParty(partyId), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "party/{partyId}/song", method = RequestMethod.POST)
 	public ResponseEntity<HttpStatus> addSongToParty(@PathVariable("partyId") Long partyId, @RequestBody Song song) {
 		
-		// TODO: PartyService addSongToParty method!
-		
-		Song existingSong = songService.findByVideoId(song.getVideoId());
-		Party party = partyService.find(partyId);
-		
-		Play play = new Play();
-		play.setParty(party);
-		play.setStatus(SongStatus.ADDED);
-		
-		if(existingSong == null) {
-			// create the song
-			play.setSong(song);
-			songService.createSong(song);
-		} else {
-			// update the song
-			play.setSong(existingSong);
-		}
-		
-		playService.createPlay(play);
+		partyService.addSongToParty(song, partyId);
 		
 		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 	}
