@@ -25,12 +25,10 @@
 							"raw": "{\n\t\"partyName\": \"matt\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/v1/party",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/party",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -56,16 +54,44 @@
 							"raw": "{\n\t\"videoId\": \"123\",\n\t\"title\": \"A\",\n\t\"artist\": \"B\",\n\t\"duration\": 123,\n\t\"party\": {\n\t\t\"id\": 1\n\t}\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/v1/party",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/party",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"v1",
 								"party"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Party",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"videoId\": \"123\",\n\t\"title\": \"A\",\n\t\"artist\": \"B\",\n\t\"duration\": 123,\n\t\"party\": {\n\t\t\"id\": 1\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/party/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"party",
+								"1"
 							]
 						},
 						"description": ""
@@ -79,9 +105,41 @@
 			"description": "",
 			"item": [
 				{
-					"name": "Song",
+					"name": "Add Song To Party",
 					"request": {
 						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"videoId\": \"WxxXXkTE8qc\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/api/v1/party/1/song/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"party",
+								"1",
+								"song",
+								""
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Song",
+					"request": {
+						"method": "DELETE",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -93,16 +151,15 @@
 							"raw": "{\n\t\"videoId\": \"123\",\n\t\"title\": \"A\",\n\t\"artist\": \"B\",\n\t\"duration\": 123,\n\t\"party\": {\n\t\t\"id\": 1\n\t}\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/v1/song",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/song/2",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"v1",
-								"song"
+								"song",
+								"2"
 							]
 						},
 						"description": ""
@@ -110,26 +167,50 @@
 					"response": []
 				},
 				{
-					"name": "Song By Party ID",
+					"name": "Get Songs By Party",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:8080/api/v1/song/1",
-							"protocol": "http",
+							"raw": "{{host}}/api/v1/party/1/play/",
 							"host": [
-								"localhost"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"v1",
-								"song",
-								"1"
+								"party",
+								"1",
+								"play",
+								""
 							]
 						},
-						"description": ""
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "Get Next Song By Party",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{host}}/api/v1/party/1/song/next",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"party",
+								"1",
+								"song",
+								"next"
+							]
+						},
+						"description": null
 					},
 					"response": []
 				}
